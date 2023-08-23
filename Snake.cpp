@@ -61,6 +61,11 @@ bool CoreGame::Snake::ateFood(CoreGame::Food *fd)
     return false;
 }
 
+void CoreGame::Snake::updateSpeed(float speed)
+{
+    movementScale += speed;
+}
+
 void CoreGame::Snake::moveSnake(sf::Vector2<int> direction)
 {
     snake_direction_list.push_front(direction);

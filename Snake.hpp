@@ -44,6 +44,7 @@ namespace CoreGame
         void drawSnake();
         bool died();
         bool ateFood(CoreGame::Food *fd);
+        void updateSpeed(float speed);
         void moveSnake(sf::Vector2<int> direction);
 
         sf::Vector2f getNextFoodLocation();

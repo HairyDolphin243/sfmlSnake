@@ -11,6 +11,7 @@ CoreGame::GameController::GameController(sf::RenderWindow *w) : snake(w)
     loopInvarient   = true;
 }
 
+
 void CoreGame::GameController::start()
 {
     loadResources();
@@ -30,7 +31,7 @@ void CoreGame::GameController::gameLoop()
         sf::Event event;
         while(screen->pollEvent(event))
         {
-            if (event.type == sf::Event::KeyReleased)
+            if (event.type == sf::Event::KeyPressed)
             {
                 if(event.key.code == sf::Keyboard::Up)
                 {
@@ -58,21 +59,57 @@ void CoreGame::GameController::gameLoop()
             //game Over
             gameOver();
 
+            submitScore("test.txt");
+
+            //This is where the score needs to be saved
+            //1 - Ask for Username
+            //2 - Check for Username in json file
+            //3 - Check score
+            //4 - If score < than current score, update top score
+            //5 - Order file from Highest-Lowest
+            //6 - Write new file back out.
+
         }
-        if (snake.ateFood(food)) {
+        if (snake.ateFood(food))
+        {
+            //Updates Score
             score++;
+            // Increase Snake Speed
+            snake.updateSpeed(0.1);
+            // Removes old food from screen and replaces it with new food
             delete food;
             food = new Food(screen, snake.getNextFoodLocation());
         }
         screen->display();
         screen->setFramerateLimit(60);
     }
+
 }
 
 void CoreGame::GameController::setupScene()
 {
     screen->clear();
     snake.drawSnake();
+}
+
+void CoreGame::GameController::submitScore(const std::string& file)
+{
+    highscores.open(file, std::ios::out);
+
+    if (!highscores)
+    {
+        std::cerr<< "Unable to create highscores file!/n";
+    };
+
+    else
+    {
+        std::cout << "Created highscores file/n"
+
+        //Entered Info into the highscore list
+        highscores << "This is a test";
+
+        highscores.close();
+    }
 }
 
 void CoreGame::GameController::gameOver()

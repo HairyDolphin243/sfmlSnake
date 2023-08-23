@@ -9,6 +9,7 @@
 
 #include <iostream>
 #include <nlohmann/json.hpp>
+#include <fstream>
 
 namespace CoreGame
 {
@@ -61,6 +62,9 @@ namespace CoreGame
         //Setup scene
         void setupScene();
 
+        //Writes New Score to Scoring File
+        void submitScore(const std::string& file);
+
         // Game over
         void gameOver();
 
@@ -75,6 +79,7 @@ namespace CoreGame
         sf::RenderWindow*       screen;
         sf::Font                fontList[3];
 
+        std::fstream highscores;
     };
 
 }
